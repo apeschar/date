@@ -18,9 +18,13 @@ class Date {
         if (sscanf($date, '%d-%d-%d', $y, $m, $d) !== 3) {
             throw new InvalidArgumentException('Could not parse date');
         }
-        $jd = gregoriantojd($m, $d, $y);
+        return self::fromDate($y, $m, $d);
+    }
+
+    public static function fromDate(int $year, int $month, int $day): self {
+        $jd = gregoriantojd($month, $day, $year);
         if (!$jd) {
-            throw new InvalidArgumentException("Date out of valid range: $y-$m-$d");
+            throw new InvalidArgumentException("Date out of valid range: $year-$month-$day");
         }
         return new static($jd);
     }
@@ -43,6 +47,40 @@ class Date {
 
     public function getYear(): int {
         return $this->getGregorianField('year');
+    }
+
+    public function getFirstDateOfQuarter(): self {
+        $date = $this->getFirstDateOfMonth();
+        while (($date->getMonth() - 1) % 3) {
+            $date = $date->addMonths(-1);
+        }
+        return $date;
+    }
+
+    public function getLastDateOfQuarter(): self {
+        return $this->getFirstDateOfQuarter()->addMonths(3)->addDays(-1);
+    }
+
+    public function getFirstDateOfMonth(): self {
+        return $this->withDay(1);
+    }
+
+    private function withDay(int $date): self {
+        return self::fromDate($this->getYear(), $this->getMonth(), 1);
+    }
+
+    public function addMonths(int $months): self {
+        $year = $this->getYear();
+        $month = $this->getMonth() + $months;
+        while ($month > 12) {
+            $year++;
+            $month -= 12;
+        }
+        while ($month < 1) {
+            $year--;
+            $month += 12;
+        }
+        return self::fromDate($year, $month, $this->getDay());
     }
 
     private function getGregorianField(string $field): int {
