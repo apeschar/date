@@ -1,0 +1,25 @@
+{
+    "name": "apeschar/date",
+    "description": "A value object for dates without times",
+    "keywords": [
+        "date",
+        "value object"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Albert Peschar",
+            "email": "albert@peschar.net",
+            "homepage": "https://peschar.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kibo\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
