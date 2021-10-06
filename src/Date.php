@@ -92,6 +92,11 @@ class Date {
     }
 
     public function toIsoString(): string {
-        return date('Y-m-d', jdtounix($this->d));
+        return sprintf(
+            '%04d-%02d-%02d',
+            $this->getYear(),
+            $this->getMonth(),
+            $this->getDay()
+        );
     }
 }
