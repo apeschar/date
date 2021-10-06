@@ -1,7 +1,31 @@
 <?php
 namespace Kibo;
 
+use InvalidArgumentException;
+
 class DateTest extends \PHPUnit\Framework\TestCase {
+    public function testToday(): void {
+        $this->assertSame(date('Y-m-d'), Date::today()->toIsoString());
+    }
+
+    public function testFromString(): void {
+        $this->assertSame('2021-01-01', Date::fromString('2021-01-01')->toIsoString());
+    }
+
+    public function testFromStringInvalidDate(): void {
+        $this->expectException(InvalidArgumentException::class);
+        Date::fromString('2021-13-01');
+    }
+
+    public function testFromStringInvalidFormat(): void {
+        $this->expectException(InvalidArgumentException::class);
+        Date::fromString('abcd');
+    }
+
+    public function testDiffDays(): void {
+        $this->assertSame(366, Date::fromString('2021-01-01')->diffDays(Date::fromString('2020-01-01')));
+    }
+
     public function testGet(): void {
         $date = Date::fromString('2021-09-06');
         $this->assertSame(6, $date->getDay());
@@ -29,5 +53,9 @@ class DateTest extends \PHPUnit\Framework\TestCase {
 
         $date = Date::fromDate(2021, 1, 31)->addMonths(-13);
         $this->assertSame('2019-12-31', $date->toIsoString());
+    }
+
+    public function testToString(): void {
+        $this->assertSame('1830-11-30', (string) Date::fromString('1830-11-30'));
     }
 }
