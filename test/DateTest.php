@@ -1,4 +1,5 @@
 <?php
+
 namespace Kibo;
 
 use InvalidArgumentException;
