@@ -18,7 +18,7 @@ class Date {
         if (sscanf($date, '%d-%d-%d', $y, $m, $d) !== 3) {
             throw new InvalidArgumentException('Could not parse date');
         }
-        return self::fromDate($y, $m, $d);
+        return static::fromDate($y, $m, $d);
     }
 
     public static function fromDate(int $year, int $month, int $day): self {
@@ -66,7 +66,7 @@ class Date {
     }
 
     private function withDay(int $date): self {
-        return self::fromDate($this->getYear(), $this->getMonth(), 1);
+        return static::fromDate($this->getYear(), $this->getMonth(), 1);
     }
 
     public function addMonths(int $months): self {
@@ -80,7 +80,7 @@ class Date {
             $year--;
             $month += 12;
         }
-        return self::fromDate($year, $month, $this->getDay());
+        return static::fromDate($year, $month, $this->getDay());
     }
 
     private function getGregorianField(string $field): int {
