@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! git describe --tags --exact-match &>/dev/null; then
+    echo "No version tag for the current commit?" >&2
+fi
+
+git push git@github.com:apeschar/date HEAD --tags
