@@ -30,6 +30,14 @@ class Date {
         return new static($jd);
     }
 
+    public static function fromDateTime(\DateTimeInterface $dateTime): self {
+        return self::fromDate(
+            (int) $dateTime->format('Y'),
+            (int) $dateTime->format('m'),
+            (int) $dateTime->format('d')
+        );
+    }
+
     public function addDays(int $delta): self {
         return new static($this->d + $delta);
     }

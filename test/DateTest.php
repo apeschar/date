@@ -59,4 +59,15 @@ class DateTest extends \PHPUnit\Framework\TestCase {
     public function testToString(): void {
         $this->assertSame('1830-11-30', (string) Date::fromString('1830-11-30'));
     }
+
+    public function testFromDateTime() {
+        $this->assertEquals(
+            Date::fromString('2022-08-22'),
+            Date::fromDateTime(new \DateTimeImmutable('2022-08-22'))
+        );
+        $this->assertEquals(
+            Date::fromString('2022-08-22'),
+            Date::fromDateTime(new \DateTime('2022-08-22'))
+        );
+    }
 }
