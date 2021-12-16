@@ -42,6 +42,10 @@ class Date {
         return new static($this->d + $delta);
     }
 
+    public function subDays(int $delta): self {
+        return $this->addDays(-$delta);
+    }
+
     public function diffDays(self $other): int {
         return $this->d - $other->d;
     }
@@ -67,7 +71,7 @@ class Date {
     }
 
     public function getLastDateOfQuarter(): self {
-        return $this->getFirstDateOfQuarter()->addMonths(3)->addDays(-1);
+        return $this->getFirstDateOfQuarter()->addMonths(3)->subDays(1);
     }
 
     public function getFirstDateOfMonth(): self {
@@ -90,6 +94,10 @@ class Date {
             $month += 12;
         }
         return static::fromDate($year, $month, $this->getDay());
+    }
+
+    public function subMonths(int $months): self {
+        return $this->addMonths(-$months);
     }
 
     private function getGregorianField(string $field): int {

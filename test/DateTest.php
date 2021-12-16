@@ -52,6 +52,9 @@ class DateTest extends \PHPUnit\Framework\TestCase {
         $date = Date::fromDate(2021, 1, 31)->addMonths(-1);
         $this->assertSame('2020-12-31', $date->toIsoString());
 
+        $date = Date::fromDate(2021, 1, 31)->subMonths(1);
+        $this->assertSame('2020-12-31', $date->toIsoString());
+
         $date = Date::fromDate(2021, 1, 31)->addMonths(-13);
         $this->assertSame('2019-12-31', $date->toIsoString());
     }
