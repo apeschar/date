@@ -1,12 +1,23 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Kibo;
 
 use InvalidArgumentException;
 
 class DateTest extends \PHPUnit\Framework\TestCase {
+    public function setUp(): void {
+        date_default_timezone_set('UTC');
+    }
+
     public function testToday(): void {
         $this->assertSame(date('Y-m-d'), Date::today()->toIsoString());
+    }
+
+    public function testFromUnix(): void {
+        $timestamp = strtotime('2022-11-14 23:30 UTC');
+        $this->assertSame('2022-11-14', Date::fromUnix($timestamp)->toIsoString());
+        date_default_timezone_set('Europe/Amsterdam');
+        $this->assertSame('2022-11-15', Date::fromUnix($timestamp)->toIsoString());
     }
 
     public function testFromString(): void {

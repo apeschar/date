@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Kibo;
 
@@ -12,7 +12,15 @@ class Date {
     }
 
     public static function today(): self {
-        return new static(unixtojd());
+        return self::fromUnix(time());
+    }
+
+    public static function fromUnix(int $timestamp): self {
+        return self::fromDate(
+            (int) date('Y', $timestamp),
+            (int) date('n', $timestamp),
+            (int) date('j', $timestamp)
+        );
     }
 
     public static function fromString(string $date): self {
